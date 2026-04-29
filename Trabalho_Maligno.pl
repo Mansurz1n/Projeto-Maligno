@@ -82,3 +82,14 @@ tranformaCMemNome([X|Y],[P|R]):-materia(X,P,_),tranformaCMemNome(Y,R).
 
 falta(RA,CC,OQUE):-diferente(RA,CC,R),tranformaCMemNome(R,OQUE).
 
+%exercicio3
+
+%oq fazer, pegar as materias que ele passou(Já temos)
+%ver se essa materia pertence ao tal curso (já temos, mas sem recursão e sem lista)
+%caso ela não pertence ela é extra ent entra no QUAIS
+
+npertence_lista([],_,[]).
+npertence_lista([P|R],L,[P|Resposta]):-not(pertence(P,L)),npertence_lista(R,L,Resposta).
+npertence_lista([P|R],L,Resposta):-pertence(P,L),npertence_lista(R,L,Resposta).
+
+extra(RA,CC,QUAIS):-materias_aprovado(RA,LMA),curriculo(CC,LM),npertence_lista(LMA,LM,Q),tranformaCMemNome(Q,QUAIS).
