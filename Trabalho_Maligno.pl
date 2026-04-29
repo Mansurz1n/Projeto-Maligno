@@ -37,7 +37,7 @@ historico(12090,[item(7,1,2012,6.0,0.75),item(8,2,2014,8.0,0.89),item(5,2,2014,8
 
 
 
-
+%exercicio1
 pertence(CM,[CM|_]).
 pertence(CM,[P|R]):-CM\==P,pertence(CM,R).
 
@@ -52,8 +52,7 @@ aprovadoMateriaCurso(RA,[P|R]):-foi_aprovado(RA,P),aprovadoMateriaCurso(RA,R).
 
 concluiu(RA,CC):-curriculo(CC,LM),aprovadoMateriaCurso(RA,LM).
 
-
-%X=listarestante
+%exercicio2
 tem(E,[E|_]).
 tem(E,[P|R]):-E\==P,tem(E,R).
 tem(E,[P|R]):-E\==P,is_list(P),tem(E,P).
@@ -63,7 +62,17 @@ ntem([],_,[]).
 ntem([P|R],L,Res):-tem(P,L),ntem(R,L,Res).
 ntem([P|R],L,[P|Res]):-not(tem(P,L)),ntem(R,L,Res).
 
-diferente(RA,CC,R):-aprovadoMateriaCurso(RA,LM),curriculo(CC,LMC),ntem(LM,LMC,R).
+listaAprovados([],[]).
+%foi aprovado
+listaAprovados([item(CM,_,_,NT,FQ)|R],[CM|Resposta]):-aprovado(item(CM,_,_,NT,FQ)),listaAprovados(R,Resposta).
+%nao passou
+listaAprovados([item(CM,_,_,NT,FQ)|R],Resposta):-not(aprovado(item(CM,_,_,NT,FQ))),listaAprovados(R,Resposta).
+
+
+%lista de Aprovados
+materias_aprovado(RA,LA):-historico(RA,LM),listaAprovados(LM,LA).
+
+diferente(RA,CC,R):-materias_aprovado(RA,LM),curriculo(CC,LMC),ntem(LMC,LM,R).
 
 tranformaCMemNome([],[]).
 tranformaCMemNome([X|Y],[P|R]):-materia(X,P,_),tranformaCMemNome(Y,R).
