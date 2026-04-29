@@ -53,5 +53,23 @@ aprovadoMateriaCurso(RA,[P|R]):-foi_aprovado(RA,P),aprovadoMateriaCurso(RA,R).
 concluiu(RA,CC):-curriculo(CC,LM),aprovadoMateriaCurso(RA,LM).
 
 
+%X=listarestante
+tem(E,[E|_]).
+tem(E,[P|R]):-E\==P,tem(E,R).
+tem(E,[P|R]):-E\==P,is_list(P),tem(E,P).
 
+
+ntem([],_,[]).
+ntem([P|R],L,Res):-tem(P,L),ntem(R,L,Res).
+ntem([P|R],L,[P|Res]):-not(tem(P,L)),ntem(R,L,Res).
+
+diferente(RA,CC,R):-aprovadoMateriaCurso(RA,LM),curriculo(CC,LMC),ntem(LM,LMC,R).
+
+tranformaCMemNome([],[]).
+tranformaCMemNome([X|Y],[P|R]):-materia(X,P,_),tranformaCMemNome(Y,R).
+
+%not pagina 23 apostila 3
+
+
+falta(RA,CC,OQUE):-diferente(RA,CC,R),tranformaCMemNome(R,OQUE).
 
