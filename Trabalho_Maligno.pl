@@ -93,3 +93,31 @@ npertence_lista([P|R],L,[P|Resposta]):-not(pertence(P,L)),npertence_lista(R,L,Re
 npertence_lista([P|R],L,Resposta):-pertence(P,L),npertence_lista(R,L,Resposta).
 
 extra(RA,CC,QUAIS):-materias_aprovado(RA,LMA),curriculo(CC,LM),npertence_lista(LMA,LM,Q),tranformaCMemNome(Q,QUAIS).
+% conta elementos de uma lista
+tamanho([],0).
+tamanho([_|R],N):-
+    tamanho(R,N1),
+    N is N1 + 1.
+
+
+% pega apenas as matérias aprovadas que pertencem ao currículo
+materiasDoCurso([],_,[]).
+
+materiasDoCurso([P|R],LC,[P|Resposta]):-
+    pertence(P,LC),
+    materiasDoCurso(R,LC,Resposta).
+
+materiasDoCurso([P|R],LC,Resposta):-
+    not(pertence(P,LC)),
+    materiasDoCurso(R,LC,Resposta).
+
+
+% exercício 4
+jafoi(CC,RA,QUANTO):-
+    materias_aprovado(RA,LMA),
+    curriculo(CC,LC),
+    materiasDoCurso(LMA,LC,Feitas), % só as obrigatórias
+    tamanho(Feitas,NFeitas),
+    tamanho(LC,Total),
+    QUANTO is (NFeitas * 100) / Total.
+
