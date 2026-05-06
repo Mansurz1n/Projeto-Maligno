@@ -1,4 +1,4 @@
-
+% Base de conhecimento
 curso(1,informatica).
 curso(2,eletro_eletronica).
 
@@ -100,7 +100,7 @@ tamanho([_|R],N):-
     N is N1 + 1.
 
 
-% pega apenas as matérias aprovadas que pertencem ao currículo
+%matérias aprovadas que pertencem ao currículo
 materiasDoCurso([],_,[]).
 
 materiasDoCurso([P|R],LC,[P|Resposta]):-
