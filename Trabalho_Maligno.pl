@@ -55,7 +55,6 @@ concluiu(RA,CC):-curriculo(CC,LM),aprovadoMateriaCurso(RA,LM).
 %exercicio2
 tem(E,[E|_]).
 tem(E,[P|R]):-E\==P,tem(E,R).
-tem(E,[P|R]):-E\==P,is_list(P),tem(E,P).
 
 
 ntem([],_,[]).
@@ -93,6 +92,7 @@ npertence_lista([P|R],L,[P|Resposta]):-not(pertence(P,L)),npertence_lista(R,L,Re
 npertence_lista([P|R],L,Resposta):-pertence(P,L),npertence_lista(R,L,Resposta).
 
 extra(RA,CC,QUAIS):-materias_aprovado(RA,LMA),curriculo(CC,LM),npertence_lista(LMA,LM,Q),tranformaCMemNome(Q,QUAIS).
+
 % conta elementos de uma lista
 tamanho([],0).
 tamanho([_|R],N):-
@@ -119,5 +119,5 @@ jafoi(CC,RA,QUANTO):-
     materiasDoCurso(LMA,LC,Feitas), % só as obrigatórias
     tamanho(Feitas,NFeitas),
     tamanho(LC,Total),
-    QUANTO is (NFeitas * 100) / Total.
+    QUANTO is (NFeitas * 100.0) / Total.
 
